@@ -27,6 +27,11 @@ func main() {
 
 		accountBalance += depositAmount
 
+		if depositAmount <= 0 {
+			fmt.Println("Invalid amount!")
+			return
+		}
+
 		fmt.Println("Balance updated! New Amount:", accountBalance)
 	} else if choice == 3 {
 		fmt.Print("Your withdrawal:")
@@ -37,8 +42,6 @@ func main() {
 
 		fmt.Println("Balance updated! New Amount:", accountBalance)
 	} else {
-
+		fmt.Println("Exiting...")
 	}
-
-	fmt.Println("Your choice: ", choice)
 }
