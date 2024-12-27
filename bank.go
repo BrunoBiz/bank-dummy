@@ -4,44 +4,55 @@ import "fmt"
 
 func main() {
 	var accountBalance float64 = 1000
-
 	fmt.Println("Welcome to Go Bank")
-	fmt.Println("What would you like to do?")
-	fmt.Println("1. Check balance")
-	fmt.Println("2. Deposit money")
-	fmt.Println("3. Withdraw money")
-	fmt.Println("4. Exit")
 
-	var choice int
-	// wantsCheckBalance := choice == 1
+	for {
+		fmt.Println("What would you like to do?")
+		fmt.Println("1. Check balance")
+		fmt.Println("2. Deposit money")
+		fmt.Println("3. Withdraw money")
+		fmt.Println("4. Exit")
 
-	fmt.Print("Your choice:")
-	fmt.Scan(&choice)
+		var choice int
+		// wantsCheckBalance := choice == 1
 
-	if choice == 1 {
-		fmt.Println("Your balance is: ", accountBalance)
-	} else if choice == 2 {
-		fmt.Print("Your deposit:")
-		var depositAmount float64
-		fmt.Scan(&depositAmount)
+		fmt.Print("Your choice:")
+		fmt.Scan(&choice)
 
-		accountBalance += depositAmount
+		switch choice {
+		case 1:
+			fmt.Println("Your balance is: ", accountBalance)
+		case 2:
+			fmt.Print("Your deposit:")
+			var depositAmount float64
+			fmt.Scan(&depositAmount)
 
-		if depositAmount <= 0 {
-			fmt.Println("Invalid amount!")
+			accountBalance += depositAmount
+
+			if depositAmount <= 0 {
+				fmt.Println("Invalid amount!")
+				continue
+			}
+
+			fmt.Println("Balance updated! New Amount:", accountBalance)
+		case 3:
+			fmt.Print("Your withdrawal:")
+			var withdrawalAmount float64
+			fmt.Scan(&withdrawalAmount)
+
+			if withdrawalAmount <= 0 || withdrawalAmount > accountBalance {
+				fmt.Println("Invalid amount!")
+				continue
+			}
+
+			accountBalance -= withdrawalAmount
+
+			fmt.Println("Balance updated! New Amount:", accountBalance)
+
+		default:
+			fmt.Println("Exiting...")
+			fmt.Println("Thanks for using Go Bank")
 			return
 		}
-
-		fmt.Println("Balance updated! New Amount:", accountBalance)
-	} else if choice == 3 {
-		fmt.Print("Your withdrawal:")
-		var withdrawalAmount float64
-		fmt.Scan(&withdrawalAmount)
-
-		accountBalance -= withdrawalAmount
-
-		fmt.Println("Balance updated! New Amount:", accountBalance)
-	} else {
-		fmt.Println("Exiting...")
 	}
 }
