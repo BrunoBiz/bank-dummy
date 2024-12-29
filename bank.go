@@ -1,17 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"example.com/bank/fileops"
+	"github.com/Pallinder/go-randomdata"
+)
+
+const accountBalanceFile = "balance.txt"
 
 func main() {
-	var accountBalance float64 = 1000
+	var accountBalance, err = fileops.GetFloatFromFile(accountBalanceFile)
+
+	if err != nil {
+		fmt.Println("ERROR")
+		fmt.Println(err)
+		fmt.Println("-----------------")
+		//panic("CANT CONTINUE")
+	}
+
 	fmt.Println("Welcome to Go Bank")
+	fmt.Println(randomdata.PhoneNumber())
 
 	for {
-		fmt.Println("What would you like to do?")
-		fmt.Println("1. Check balance")
-		fmt.Println("2. Deposit money")
-		fmt.Println("3. Withdraw money")
-		fmt.Println("4. Exit")
+		presentOptions()
 
 		var choice int
 		// wantsCheckBalance := choice == 1
@@ -35,6 +47,7 @@ func main() {
 			}
 
 			fmt.Println("Balance updated! New Amount:", accountBalance)
+			fileops.WriteFloatToFile(accountBalance, accountBalanceFile)
 		case 3:
 			fmt.Print("Your withdrawal:")
 			var withdrawalAmount float64
@@ -48,7 +61,7 @@ func main() {
 			accountBalance -= withdrawalAmount
 
 			fmt.Println("Balance updated! New Amount:", accountBalance)
-
+			fileops.WriteFloatToFile(accountBalance, accountBalanceFile)
 		default:
 			fmt.Println("Exiting...")
 			fmt.Println("Thanks for using Go Bank")
